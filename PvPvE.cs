@@ -47,12 +47,12 @@ namespace Oxide.Plugins
             public bool EnableCraftingBoostInPvP = true;
             public float CraftingSpeedMultiplier = 2.0f;
             public bool EnableUpkeepReductionInPvP = true;
-            public float UpkeepMultiplier = 0.5f;
+            public float UpkeepMultiplier = 0.75f;
             public bool EnableGatherBoostInPvP = true;
-            public float GatherRateMultiplierInPvP = 2.0f;
-            public float TerrainThreshold = 0.4f;
-            public float MonumentRadius = 100f;
-            public float HackableCrateRadius = 75f;
+            public float GatherRateMultiplierInPvP = 1.5f;
+            public float TerrainThreshold = 0.2f;
+            public float MonumentRadius = 150f;
+            public float HackableCrateRadius = 100f;
             public int PvPStatusExportInterval = 3600; // seconds
             public string RustcordChannel = ""; // Discord channel ID
             public Dictionary<string, int> BiomePvP = new()
@@ -95,6 +95,12 @@ namespace Oxide.Plugins
             Config.WriteObject(config, true);
         }
 
+        void OnNewSave(string filename)
+        {
+        config = new ConfigData();
+        Puts("Config Remake");
+        SaveConfig();
+        }
         protected override void LoadDefaultConfig()
         {
             config = new ConfigData();
@@ -229,7 +235,7 @@ object OnEntityTakeDamage(BaseCombatEntity entity, HitInfo info)
         #endregion
 
         #region 🐞 Debug Command
-        [ChatCommand("pvpve_debug")]
+        [ChatCommand("pvp_debug")]
         private void DebugPvPZone(BasePlayer player, string command, string[] args)
         {
             if (player == null || !player.IsAdmin) return;
