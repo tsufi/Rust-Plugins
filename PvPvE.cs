@@ -97,7 +97,7 @@ namespace Oxide.Plugins
 
         void OnNewSave(string filename)
         {
-        config = new ConfigData();
+        LoadDefaultConfig();
         Puts("Config Remake");
         SaveConfig();
         }
